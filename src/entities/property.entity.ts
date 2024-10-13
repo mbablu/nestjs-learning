@@ -1,16 +1,17 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+/* eslint-disable prettier/prettier */
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class Property{
-    @PrimaryGeneratedColumn()
-    id:number;
+export class Property {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    name:string;
+  @Column()
+  name: string;
 
-    @Column()
-    description:string;
+  @Column()
+  description: string;
 
-    @Column({default: 0})
-    price:number;
+  @Column({ default: 0 })
+  price: number;
 }
