@@ -1,19 +1,17 @@
 /* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
-  ParseBoolPipe,
   ParseIntPipe,
   Patch,
-  Post,
-  Query,
-  ValidationPipe,
+  Post
 } from '@nestjs/common';
 import { CreatePropertyDto } from './dto/createProperty.dto';
-import { HeadersDto } from './dto/headers.dto';
-import { RequestHeader } from './pipes/request-headers';
+import { UpdatePropertyDto } from './dto/updateProperty.dto';
 import { PropertyService } from './property.service';
 
 @Controller('property')
@@ -26,8 +24,8 @@ export class PropertyController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id, @Query('sort', ParseBoolPipe) sort) {
-    return this.propertyService.findOne();
+  findOne(@Param('id', ParseIntPipe) id) {
+    return this.propertyService.findOne(id);
   }
 
   @Post()
@@ -39,11 +37,14 @@ export class PropertyController {
 
   @Patch(':id')
   update(
-    @Body() body: CreatePropertyDto,
-
-    @RequestHeader(new ValidationPipe({ validateCustomDecorators: true }))
-    header: HeadersDto,
+    @Param('id') id,
+    @Body() body: UpdatePropertyDto,
   ) {
-    return this.propertyService.update();
+    return this.propertyService.update(id, body);
+  }
+
+  @Delete(':id')
+  delete(@Param('id') id){
+    return this.propertyService.delete(id);
   }
 }
